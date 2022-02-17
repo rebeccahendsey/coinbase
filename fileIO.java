@@ -9,6 +9,17 @@ import java.util.Date;
 
 public class fileIO 
 {
+		String fileName = null;
+		
+		public fileIO()
+		{
+		    fileName="transactionLog.txt";	
+		}
+		
+		public fileIO(String fn)
+		{
+			fileName = fn;
+		}
 		public void wrTransactionData(String dataStr)
 		{
 	        FileWriter fwg = null;
