@@ -6,6 +6,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -21,7 +22,7 @@ import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
-import java.awt.Font;
+import javax.swing.*;
 
 
 public class coinbase extends JFrame
@@ -33,6 +34,7 @@ public class coinbase extends JFrame
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.getContentPane().setBackground(new Color(16, 89, 251));
 			frame.setVisible(true);
+			 
 		}
 
 		// Create the frame
@@ -59,80 +61,65 @@ public class coinbase extends JFrame
 					              "coinbase"));;
 			setContentPane(contentPane);
 			
+
+			// Field where to see status information
 			
+			JTextField status = new JTextField();
+			status.setEditable(false);
+			status.setBounds(300, 330, 100, 34);
+			contentPane.add(status);
+			status.setColumns(40);
+			status.setBackground(Color.white);
+			status.setBorder(null);
+
 			// Border around textFields for log in and create an account
 			Border border = BorderFactory.createLineBorder(new Color(188, 188, 188));
 			// Border for textArea backgrounds
 			Border border2 = BorderFactory.createLineBorder(new Color(188, 188, 188),2);
 
+			//
 			// Log in section 
+			// 
+
+			// Log in button
 			JButton btnNewButton = new JButton("Log in");
-			btnNewButton.setBounds(250, 350, 200, 30);
-			contentPane.add(btnNewButton);	
-			btnNewButton.setBackground(new Color(16, 89, 251));
+			contentPane.add(btnNewButton);
+			btnNewButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{			
+				String emailFieldStr = emailFieldStr.getText();
+				emailFieldStr        = emailFieldStr.trim();
+				if (emailFieldStr == "" || emailFieldStr == null || emailFieldStr.length() == 0)
+				{
+					JOptionPane.showMessageDialog(null, 
+			                   "ERROR!  Email field is empty!",
+			                   JOptionPane.WARNING_MESSAGE);
+					
+					return;
+				}
+				String dataStr = null;
+				dataStr="User : " + emailFieldStr; 
+				//
+				// create object and write data to file
+				//
+				fileIO fio = new fileIO("users.txt");
+				fio.wrTransactionData(dataStr);
+				
+				emailFieldStr.setText("");
 		
-			
-			JTextField EmailTA = new JTextField("Email");
-			EmailTA.setBounds(250, 230, 200, 30);
-			contentPane.add(EmailTA);
-			EmailTA.setBorder(border);
-			EmailTA.setVisible(true);
-			EmailTA.setForeground(new Color(188, 188, 188));
-			EmailTA.setHorizontalAlignment(JTextField.CENTER);
-
-			JTextField passTA = new JTextField("Password");
-			passTA.setBounds(250, 290, 200, 30);
-			contentPane.add(passTA);
-			passTA.setBorder(border);
-			passTA.setForeground(new Color(188, 188, 188));
-			passTA.setHorizontalAlignment(JTextField.CENTER);
-
-			JLabel emailL = new JLabel("Email");
-			emailL.setBounds(250, 205, 200, 30);
-			contentPane.add(emailL);
-			emailL.setFont(new Font("Tahoma", Font.PLAIN, 10));
-
-			JLabel passL = new JLabel("Password");
-			passL.setBounds(250, 265, 200, 30);
-			contentPane.add(passL);
-			passL.setFont(new Font("Tahoma", Font.PLAIN, 10));
-
-
-			
-			// Sign up section
-			JButton btnNewButton_2 = new JButton("Create account");
-			btnNewButton_2.setBounds(650, 550, 200, 30);
-			contentPane.add(btnNewButton_2);
-
-			JLabel FnameL = new JLabel("First name");
-			FnameL.setBounds(650, 225, 90, 30);
-			contentPane.add(FnameL);
-			FnameL.setBorder(null);
-			FnameL.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			
-			JLabel LnameL = new JLabel("Last name");
-			LnameL.setBounds(760, 225, 90, 30);
-			contentPane.add(LnameL);
-			LnameL.setBorder(null);
-			LnameL.setFont(new Font("Tahoma", Font.PLAIN, 10));
-
-			JTextField FnameTA = new JTextField("First name");
-			FnameTA.setBounds(650, 250, 90, 30);
-			contentPane.add(FnameTA);
-			FnameTA.setBorder(border);
-			FnameTA.setForeground(new Color(188, 188, 188));
-			FnameTA.setHorizontalAlignment(JTextField.CENTER);
-
-			
-			JTextField header_SU = new JTextField("Create your account today");
-			header_SU.setBounds(620, 140, 300, 70);
-			contentPane.add(header_SU);
-			header_SU.setOpaque(false);
-			header_SU.setEditable(false);
-			header_SU.setFont(new Font("Tahoma", Font.PLAIN, 22));
-			header_SU.setBorder(null);
-
-
+				emailFieldStr.setSelectedItem("");
+		
+			    status.setText("Success!");
+			    status.setBackground(Color.GREEN);
+			}
+		});
+		//btnNewButton.setBounds(250, 400, 133, 34);
+		btnNewButton.setBounds(250, 365, 200, 30);	
+		contentPane.add(btnNewButton);		
+		
+		
+			// Sign in text field 
 			JTextField header_SI = new JTextField("Sign in to Coinbase");
 			header_SI.setBounds(260, 140, 300, 70);
 			contentPane.add(header_SI);
@@ -141,8 +128,79 @@ public class coinbase extends JFrame
 			header_SI.setFont(new Font("Tahoma", Font.PLAIN, 22));
 			header_SI.setBorder(null);
 			header_SI.setOpaque(false);
+		
+			// Email text field
+			JTextField EmailTA = new JTextField("");
+			EmailTA.setBounds(250, 230, 200, 30);
+			contentPane.add(EmailTA);
+			EmailTA.setBorder(border);
+			EmailTA.setVisible(true);
+			EmailTA.setForeground(new Color(188, 188, 188));
+			EmailTA.setHorizontalAlignment(JTextField.CENTER);
 
+			// Password text field 
+			JTextField passTA = new JTextField("");
+			passTA.setBounds(250, 290, 200, 30);
+			contentPane.add(passTA);
+			passTA.setBorder(border);
+			passTA.setForeground(new Color(188, 188, 188));
+			passTA.setHorizontalAlignment(JTextField.CENTER);
 
+			// Email label 
+			JLabel emailL = new JLabel("Email");
+			emailL.setBounds(250, 205, 200, 30);
+			contentPane.add(emailL);
+			emailL.setFont(new Font("Tahoma", Font.PLAIN, 10));
+
+			// Password label 
+			JLabel passL = new JLabel("Password");
+			passL.setBounds(250, 265, 200, 30);
+			contentPane.add(passL);
+			passL.setFont(new Font("Tahoma", Font.PLAIN, 10));
+				
+			// Background box for log in
+			JTextArea background1 = new JTextArea();
+			background1.setBounds(200, 150, 300, 250);
+			background1.setEditable(false);
+			contentPane.add(background1);
+			background1.setBorder(border2); 
+
+			//
+			// Sign up section
+			// 
+
+			// First name label 
+			JLabel FnameL = new JLabel("First name");
+			FnameL.setBounds(650, 225, 90, 30);
+			contentPane.add(FnameL);
+			FnameL.setBorder(null);
+			FnameL.setFont(new Font("Tahoma", Font.PLAIN, 10));
+			
+			// Last name label 
+			JLabel LnameL = new JLabel("Last name");
+			LnameL.setBounds(760, 225, 90, 30);
+			contentPane.add(LnameL);
+			LnameL.setBorder(null);
+			LnameL.setFont(new Font("Tahoma", Font.PLAIN, 10));
+
+			// First name test field 
+			JTextField FnameTA = new JTextField("First name");
+			FnameTA.setBounds(650, 250, 90, 30);
+			contentPane.add(FnameTA);
+			FnameTA.setBorder(border);
+			FnameTA.setForeground(new Color(188, 188, 188));
+			FnameTA.setHorizontalAlignment(JTextField.CENTER);
+
+			// Create account label 
+			JTextField header_SU = new JTextField("Create your account today");
+			header_SU.setBounds(620, 140, 300, 70);
+			contentPane.add(header_SU);
+			header_SU.setOpaque(false);
+			header_SU.setEditable(false);
+			header_SU.setFont(new Font("Tahoma", Font.PLAIN, 22));
+			header_SU.setBorder(null);
+
+			// Last name text field 
 			JTextField LnameTA = new JTextField("Last name ");
 			LnameTA.setBounds(760, 250, 90, 30);
 			contentPane.add(LnameTA);
@@ -150,7 +208,7 @@ public class coinbase extends JFrame
 			LnameTA.setForeground(new Color(188, 188, 188));
 			LnameTA.setHorizontalAlignment(JTextField.CENTER);
 			
-			
+			// Email text field for create account
 			JTextField EmailTA2 = new JTextField("Email");
 			EmailTA2.setBounds(650, 310, 200, 30);
 			contentPane.add(EmailTA2);
@@ -158,13 +216,14 @@ public class coinbase extends JFrame
 			EmailTA2.setForeground(new Color(188, 188, 188));
 			EmailTA2.setHorizontalAlignment(JTextField.CENTER);
 
+			// Email label for create account
 			JLabel EmailL = new JLabel("Email");
 			EmailL.setBounds(650, 285, 90, 30);
 			contentPane.add(EmailL);
 			EmailL.setBorder(null);
 			EmailL.setFont(new Font("Tahoma", Font.PLAIN, 10));
 
-
+			// Password text field for create account
 			JTextField passTA2 = new JTextField("Choose password");
 			passTA2.setBounds(650, 370, 200, 30);
 			contentPane.add(passTA2);
@@ -172,26 +231,52 @@ public class coinbase extends JFrame
 			passTA2.setForeground(new Color(188, 188, 188));
 			passTA2.setHorizontalAlignment(JTextField.CENTER);
 
+			// Password label for create account
 			JLabel PassL = new JLabel("Password");
 			PassL.setBounds(650, 345, 90, 30);
 			contentPane.add(PassL);
 			PassL.setBorder(null);
 			PassL.setFont(new Font("Tahoma", Font.PLAIN, 10));
 
+			// Create account button 
+			JButton btnNewButton_2 = new JButton("Create account");
+			btnNewButton_2.setBounds(650, 550, 200, 30);
+			contentPane.add(btnNewButton_2);
 
-			JTextField state = new JTextField("State");
-			state.setBounds(650, 430, 200, 30);
-			contentPane.add(state);
-			state.setBorder(border);
-			state.setForeground(new Color(188, 188, 188));
-			state.setHorizontalAlignment(JTextField.CENTER);
+			// State text field
 
+			String state[] = {"CT", "NY", "AZ"};
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+				JComboBox stateF = new JComboBox(state);
+				stateF.setBounds(650, 430, 200, 30);
+				contentPane.add(stateF);
+
+			// contentPane.add(state);
+
+			// btnNewButton_2.addActionListener(new ActionListener() {
+			// 	@Override
+			// 	public void actionPerformed(ActionEvent e) {
+			// 		String selectedState = jComboBox.getSelectedIndex();
+			// 		jLabel.setText(selectedState);
+			// 	}
+			// });
+
+			// JTextField state = new JTextField("State");
+			// state.setBounds(650, 430, 200, 30);
+			// contentPane.add(state);
+			// state.setBorder(border);
+			// state.setForeground(new Color(188, 188, 188));
+			// state.setHorizontalAlignment(JTextField.CENTER);
+
+
+			// State label 
 			JLabel stateL = new JLabel("State");
 			stateL.setBounds(650, 405, 200, 30);
 			contentPane.add(stateL);
 			stateL.setBorder(null);
 			stateL.setFont(new Font("Tahoma", Font.PLAIN, 10));
 
+			// Social security number text field 
 			JTextField ssn = new JTextField("Social security number");
 			ssn.setBounds(650, 490, 200, 30);
 			contentPane.add(ssn);
@@ -199,37 +284,19 @@ public class coinbase extends JFrame
 			ssn.setForeground(new Color(188, 188, 188));
 			ssn.setHorizontalAlignment(JTextField.CENTER);
 
+			// Social security label 
 			JLabel ssnL = new JLabel("Social security number");
 			ssnL.setBounds(650, 465, 200, 30);
 			contentPane.add(ssnL);
 			ssnL.setBorder(null);
 			ssnL.setFont(new Font("Tahoma", Font.PLAIN, 10));
-			
-
-			// Background box for log in
-			JTextArea background1 = new JTextArea();
-			background1.setBounds(200, 150, 300, 250);
-			background1.setEditable(false);
-			contentPane.add(background1);
-			background1.setBorder(border2);
-
-
+		
 			// Background box for sign up
 			JTextArea background2 = new JTextArea();
 			background2.setBounds(600, 150, 300, 450);
 			background2.setEditable(false);
 			contentPane.add(background2);
 			background2.setBorder(border2);
-
-
-
-			// JLabel signinText = new JLabel("Sing in to Coinbase");
-			// signinText.setBounds(350, 330, 100, 50);
-			// contentPane.add(signinText);
-
-			// JTextArea createacctTxt = new JTextArea("Create your account");
-			// createacctTxt.setBounds(350, 330, 100, 50);
-			// contentPane.add(createacctTxt);
 
 			// EXIT Button
 			JButton btnNewButton_3 = new JButton("EXIT");
@@ -246,9 +313,6 @@ public class coinbase extends JFrame
 					
 	                if (result == JOptionPane.OK_OPTION)
 	                {   
-	                 
-	                    //close shop
-	                
 					    dispose();
 					    System.exit(0);
 			     	}
@@ -257,6 +321,8 @@ public class coinbase extends JFrame
 			});
 			btnNewButton_3.setBounds(50, 700, 133, 34);
 			contentPane.add(btnNewButton_3);
+			
+			
 			
 			// SUBMIT Button
 			
@@ -297,8 +363,6 @@ public class coinbase extends JFrame
 			// submit.setBounds(250, 700, 133, 34);
 			// contentPane.add(submit);
 			
-			
-		
 			// HELP Button
 			JButton help = new JButton("HELP");
 			help.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -311,7 +375,6 @@ public class coinbase extends JFrame
 			});
 			help.setBounds(500, 700, 133, 34);
 			contentPane.add(help);
-			
 			
 			// Call thread to update date and time
 			refreshTitleBar();
