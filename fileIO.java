@@ -1,3 +1,4 @@
+//package coinbase;
 package coinbase;
 
 import java.io.BufferedWriter;
