@@ -1,4 +1,4 @@
-
+package sss5jsw;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -413,7 +413,6 @@ public class sss5jsw extends JFrame
 				    }
 				    catch (InterruptedException e)
 				   {
-					   // TODO Auto-generated catch block
 					  e.printStackTrace();
 				   }
              } // end while true 

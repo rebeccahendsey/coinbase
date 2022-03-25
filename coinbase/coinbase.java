@@ -85,36 +85,36 @@ public class coinbase extends JFrame
             // Log in button
             JButton btnNewButton = new JButton("Log in");
             contentPane.add(btnNewButton);
-            btnNewButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                String emailFieldStr = emailFieldStr.getText();
-                emailFieldStr        = emailFieldStr.trim();
-                if (emailFieldStr == "" || emailFieldStr == null || emailFieldStr.length() == 0)
-                {
-                    JOptionPane.showMessageDialog(null,
-                               "ERROR!  Email field is empty!",
-                               JOptionPane.WARNING_MESSAGE);
+        //     btnNewButton.addActionListener(new ActionListener()
+        // {
+        //     public void actionPerformed(ActionEvent arg0)
+        //     {
+        //         String emailFieldStr = EmailTA.getText();
+        //         emailFieldStr        = emailFieldStr.trim();
+        //         if (emailFieldStr == "" || emailFieldStr == null || emailFieldStr.length() == 0)
+        //         {
+        //             JOptionPane.showInputDialog(null,
+        //                        "ERROR!  Email field is empty!",
+        //                        JOptionPane.WARNING_MESSAGE);
                     
-                    return;
-                }
-                String dataStr = null;
-                dataStr="User : " + emailFieldStr;
-                //
-                // create object and write data to file
-                //
-                fileIO fio = new fileIO("users.txt");
-                fio.wrTransactionData(dataStr);
+        //             return;
+        //         }
+        //         String dataStr = null;
+        //         dataStr="User : " + emailFieldStr;
+        //         //
+        //         // create object and write data to file
+        //         //
+        //         fileIO fio = new fileIO("users.txt");
+        //         fio.wrTransactionData(dataStr);
                 
-                emailFieldStr.setText("");
+        //         emailFieldStr.setText("");
         
-                emailFieldStr.setSelectedItem("");
+        //         emailFieldStr.setSelectedItem("");
         
-                status.setText("Success!");
-                status.setBackground(Color.GREEN);
-            }
-        });
+        //         status.setText("Success!");
+        //         status.setBackground(Color.GREEN);
+        //     }
+        // });
         //btnNewButton.setBounds(250, 400, 133, 34);
         btnNewButton.setBounds(250, 365, 200, 30);
         contentPane.add(btnNewButton);

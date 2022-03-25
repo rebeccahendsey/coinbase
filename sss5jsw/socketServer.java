@@ -1,5 +1,4 @@
-
-
+package sss5jsw;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -23,6 +22,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+
+import coinbase.coinbase;
+import coinbase.fileIO;
+
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -35,8 +38,8 @@ public class socketServer implements Runnable
 
 	   static Vector<String> vec = new Vector<String>(5);
 	   
-	   public static Hashtable<String, kiosk> clients = 
-			     new Hashtable<String, kiosk>();
+	   public static Hashtable<String, coinbase> clients = 
+			     new Hashtable<String, coinbase>();
 	   
 	   static final String newline = "\n";
 	   static int first_time = 1;
@@ -112,15 +115,7 @@ public class socketServer implements Runnable
                 	int numOranges = Integer.parseInt(args[6]);
                 	int numPears   = Integer.parseInt(args[7]);
                 	
- 					clients.put(key, new kiosk(key,
- 					    	                   transCount,
- 						                       items,
- 				                               dollars,
- 				                               numApples,
- 				                               numGrapes,
- 				                               numOranges,
- 				                               numPears
- 				                           ));
+ 					clients.put(key, new coinbase());
  					
                  	line = br.readLine();
                  }
@@ -133,39 +128,32 @@ public class socketServer implements Runnable
                  int    transCount=0, ticketCount=0, numApples=0, numGrapes=0, numOranges=0, numPears=0;
                  double dollarCount=0.0;
                  
-                 List<String> v = new ArrayList<String>(clients.keySet());
-         	     for (String key : v)
-        	     {
-        	        transCount  = transCount  + clients.get(key).getTransactions();
-        	        ticketCount = ticketCount + clients.get(key).getItems();
-        	        dollarCount = dollarCount + clients.get(key).getDollars();
-        	        numApples   = numApples   + clients.get(key).getApples();
-        	        numGrapes   = numGrapes   + clients.get(key).getGrapes();
-        	        numOranges  = numOranges  + clients.get(key).getOranges();
-        	        numPears    = numPears    + clients.get(key).getPears();
-        	     }        
+                //  List<String> v = new ArrayList<String>(clients.keySet());
+         	    //  for (String key : v)
+        	    //  {
+        	    //     transCount  = transCount  + clients.get(key).getTransactions();
+        	    //     ticketCount = ticketCount + clients.get(key).getItems();
+        	    //     dollarCount = dollarCount + clients.get(key).getDollars();
+        	    //     numApples   = numApples   + clients.get(key).getApples();
+        	    //     numGrapes   = numGrapes   + clients.get(key).getGrapes();
+        	    //     numOranges  = numOranges  + clients.get(key).getOranges();
+        	    //     numPears    = numPears    + clients.get(key).getPears();
+        	    //  }        
          	    
          	     
                  int currentSize     = clients.size();
          	     sss5jsw.right.setText("Total# : " + currentSize + newline);
          	    
-         	     clients.put("totalKiosk", new kiosk("totalKiosk",
-		    	               transCount,
-			                   ticketCount,
-	                           dollarCount,
-	                           numApples,
-	                           numGrapes,
-	                           numOranges,
-	                           numPears));
+         	     clients.put("totalKiosk", new coinbase());
      	      }
      	      else
      	      {
      	    	 //
      	    	 // add these default kiosk names to start out with
      	    	 //
-     		     clients.put("kiosk#001", new kiosk("kiosk#001", 0, 0, 0.0, 0, 0, 0, 0));
-     		     clients.put("kiosk#002", new kiosk("kiosk#002", 0, 0, 0.0, 0, 0, 0, 0));
-     		     clients.put("kiosk#003", new kiosk("kiosk#003", 0, 0, 0.0, 0, 0, 0, 0));
+     		     clients.put("kiosk#001", new coinbase());
+     		     //clients.put("kiosk#002", new kiosk("kiosk#002", 0, 0, 0.0, 0, 0, 0, 0));
+     		     //clients.put("kiosk#003", new kiosk("kiosk#003", 0, 0, 0.0, 0, 0, 0, 0));
      		     
      		     
      		     //
@@ -175,29 +163,22 @@ public class socketServer implements Runnable
                  double dollarCount=0.0;
                  
                  List<String> v = new ArrayList<String>(clients.keySet());
-         	     for (String key : v)
-        	     {
-        	        transCount  = transCount  + clients.get(key).getTransactions();
-        	        ticketCount = ticketCount + clients.get(key).getItems();
-        	        dollarCount = dollarCount + clients.get(key).getDollars();
-        	        numApples   = numApples   + clients.get(key).getApples();
-        	        numGrapes   = numGrapes   + clients.get(key).getGrapes();
-        	        numOranges  = numOranges  + clients.get(key).getOranges();
-        	        numPears    = numPears    + clients.get(key).getPears();
-        	     }        
+         	    //  for (String key : v)
+        	    //  {
+        	    //     transCount  = transCount  + clients.get(key).getTransactions();
+        	    //     ticketCount = ticketCount + clients.get(key).getItems();
+        	    //     dollarCount = dollarCount + clients.get(key).getDollars();
+        	    //     numApples   = numApples   + clients.get(key).getApples();
+        	    //     numGrapes   = numGrapes   + clients.get(key).getGrapes();
+        	    //     numOranges  = numOranges  + clients.get(key).getOranges();
+        	    //     numPears    = numPears    + clients.get(key).getPears();
+        	    //  }        
          	     
          	     
          	     int currentSize     = clients.size();
         	     sss5jsw.right.setText("Total# : " + currentSize + newline);
         	     
-         	     clients.put("totalKiosk", new kiosk("totalKiosk",
-		    	               transCount,
-			                   ticketCount,
-	                           dollarCount,
-	                           numApples,
-	                           numGrapes,
-	                           numOranges,
-	                           numPears));   
+         	     clients.put("totalKiosk", new coinbase());   
      	      }
      	 }
          catch(Exception e2)
@@ -250,13 +231,13 @@ public class socketServer implements Runnable
 				
 				if (clients.containsKey(key) == true)
 		        {
-					clients.get(key).incrementTrans();
-					clients.get(key).addItems(Integer.parseInt(items));
-					clients.get(key).addDollars(Double.parseDouble(d));
-					clients.get(key).addApples(Integer.parseInt(nApples));
-					clients.get(key).addGrapes(Integer.parseInt(nGrapes));
-					clients.get(key).addOranges(Integer.parseInt(nOranges));
-					clients.get(key).addPears(Integer.parseInt(nPears));
+					// clients.get(key).incrementTrans();
+					// clients.get(key).addItems(Integer.parseInt(items));
+					// clients.get(key).addDollars(Double.parseDouble(d));
+					// clients.get(key).addApples(Integer.parseInt(nApples));
+					// clients.get(key).addGrapes(Integer.parseInt(nGrapes));
+					// clients.get(key).addOranges(Integer.parseInt(nOranges));
+					// clients.get(key).addPears(Integer.parseInt(nPears));
 					
 					long finish = System.nanoTime();
 					
@@ -264,28 +245,28 @@ public class socketServer implements Runnable
 					sss5jsw.right.append(" Time Nano-Seconds : " + timeElapsed + newline);
 					sss5jsw.right.append("Time Milli-Seconds : " + timeElapsed / 1000000 + newline);
 					
-					if (clients.containsKey("totalKiosk") == true)
-					{
-						clients.get("totalKiosk").incrementTrans();
-						clients.get("totalKiosk").addItems(Integer.parseInt(items));
-						clients.get("totalKiosk").addDollars(Double.parseDouble(d));
-						clients.get("totalKiosk").addApples(Integer.parseInt(nApples));
-						clients.get("totalKiosk").addGrapes(Integer.parseInt(nGrapes));
-						clients.get("totalKiosk").addOranges(Integer.parseInt(nOranges));
-						clients.get("totalKiosk").addPears(Integer.parseInt(nPears));
-					}
+					// if (clients.containsKey("totalKiosk") == true)
+					// {
+					// 	clients.get("totalKiosk").incrementTrans();
+					// 	clients.get("totalKiosk").addItems(Integer.parseInt(items));
+					// 	clients.get("totalKiosk").addDollars(Double.parseDouble(d));
+					// 	clients.get("totalKiosk").addApples(Integer.parseInt(nApples));
+					// 	clients.get("totalKiosk").addGrapes(Integer.parseInt(nGrapes));
+					// 	clients.get("totalKiosk").addOranges(Integer.parseInt(nOranges));
+					// 	clients.get("totalKiosk").addPears(Integer.parseInt(nPears));
+					// }
 		        }
 				else
 				{
-					clients.put(key, new kiosk(key, 0, 0, 0.0, 0, 0, 0, 0));      // create a new key right now and add it to the hash table!
+					clients.put(key, new coinbase());      // create a new key right now and add it to the hash table!
 					
-					clients.get(key).incrementTrans();
-					clients.get(key).addItems(Integer.parseInt(items));
-					clients.get(key).addDollars(Double.parseDouble(d));
-					clients.get(key).addApples(Integer.parseInt(nApples));
-					clients.get(key).addGrapes(Integer.parseInt(nGrapes));
-					clients.get(key).addOranges(Integer.parseInt(nOranges));
-					clients.get(key).addPears(Integer.parseInt(nPears));
+					// clients.get(key).incrementTrans();
+					// clients.get(key).addItems(Integer.parseInt(items));
+					// clients.get(key).addDollars(Double.parseDouble(d));
+					// clients.get(key).addApples(Integer.parseInt(nApples));
+					// clients.get(key).addGrapes(Integer.parseInt(nGrapes));
+					// clients.get(key).addOranges(Integer.parseInt(nOranges));
+					// clients.get(key).addPears(Integer.parseInt(nPears));
 					
 					long finish = System.nanoTime();
 					
@@ -293,16 +274,16 @@ public class socketServer implements Runnable
 					sss5jsw.right.append(" Time Nano-Seconds : " + timeElapsed + newline);
 					sss5jsw.right.append("Time Milli-Seconds : " + timeElapsed / 1000000 + newline);
 					
-					if (clients.containsKey("totalKiosk") == true)
-					{
-						clients.get("totalKiosk").incrementTrans();
-						clients.get("totalKiosk").addItems(Integer.parseInt(items));
-						clients.get("totalKiosk").addDollars(Double.parseDouble(d));
-						clients.get("totalKiosk").addApples(Integer.parseInt(nApples));
-						clients.get("totalKiosk").addGrapes(Integer.parseInt(nGrapes));
-						clients.get("totalKiosk").addOranges(Integer.parseInt(nOranges));
-						clients.get("totalKiosk").addPears(Integer.parseInt(nPears));
-					}
+					// if (clients.containsKey("totalKiosk") == true)
+					// {
+					// 	clients.get("totalKiosk").incrementTrans();
+					// 	clients.get("totalKiosk").addItems(Integer.parseInt(items));
+					// 	clients.get("totalKiosk").addDollars(Double.parseDouble(d));
+					// 	clients.get("totalKiosk").addApples(Integer.parseInt(nApples));
+					// 	clients.get("totalKiosk").addGrapes(Integer.parseInt(nGrapes));
+					// 	clients.get("totalKiosk").addOranges(Integer.parseInt(nOranges));
+					// 	clients.get("totalKiosk").addPears(Integer.parseInt(nPears));
+					// }
 				}
 			break;
 			
@@ -329,7 +310,7 @@ public class socketServer implements Runnable
 		nextKioskNumber = nextKioskNumber - 1;
 		kioskString     = "kiosk#" + String.format("%03d", nextKioskNumber);
 				
-		clients.put(kioskString, new kiosk(kioskString, 0, 0, 0.0, 0, 0, 0, 0));
+		clients.put(kioskString, new coinbase());
 	}
 
 	//
@@ -360,7 +341,7 @@ public class socketServer implements Runnable
 	    	if (key.equals("totalKiosk") == true)
 	    		continue;
 	    	
-	        outg.println(clients.get(key).forFileOutput());
+	       // outg.println(clients.get(key).forFileOutput());
 	    }
 	        
         outg.close();
@@ -512,7 +493,7 @@ public class socketServer implements Runnable
 	            	  
 	            	  if (tokens.length == 2)
 	            	  {
-	            	     clients.put(tokens[1], new kiosk(tokens[1], 0, 0, 0.0, 0, 0, 0, 0));
+	            	     clients.put(tokens[1], new coinbase());
 	            	     
 	            	     pstream.println("ACK");
 	            	  }
