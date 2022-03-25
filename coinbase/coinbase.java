@@ -1,5 +1,4 @@
 package coinbase;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -19,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
@@ -40,13 +40,12 @@ public class coinbase extends JFrame
         // Create the frame
         public coinbase()
         {
-            // Frame title display current tim
+            // Frame title display current time
             Date  date = new Date();
             String str = String.format("%tc", date);
         
             String titleString = "--- Coinbase --- " + str;
 
-            
             setTitle(titleString);
             
             NumberFormat formatter = new DecimalFormat("#0.00");
@@ -54,7 +53,7 @@ public class coinbase extends JFrame
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             
             // Size of the frame
-            setSize(1000,800);
+            setSize(1000,1000);
             
             // Panel title
             JPanel contentPane = new JPanel();
@@ -64,7 +63,6 @@ public class coinbase extends JFrame
             
 
             // Field where to see status information
-            
             JTextField status = new JTextField();
             status.setEditable(false);
             status.setBounds(300, 330, 100, 34);
@@ -75,50 +73,21 @@ public class coinbase extends JFrame
 
             // Border around textFields for log in and create an account
             Border border = BorderFactory.createLineBorder(new Color(188, 188, 188));
+
             // Border for textArea backgrounds
             Border border2 = BorderFactory.createLineBorder(new Color(188, 188, 188),2);
 
-            //
+           
             // Log in section
-            //
-
-            // Log in button
-            JButton btnNewButton = new JButton("Log in");
-            contentPane.add(btnNewButton);
-        //     btnNewButton.addActionListener(new ActionListener()
-        // {
-        //     public void actionPerformed(ActionEvent arg0)
-        //     {
-        //         String emailFieldStr = EmailTA.getText();
-        //         emailFieldStr        = emailFieldStr.trim();
-        //         if (emailFieldStr == "" || emailFieldStr == null || emailFieldStr.length() == 0)
-        //         {
-        //             JOptionPane.showInputDialog(null,
-        //                        "ERROR!  Email field is empty!",
-        //                        JOptionPane.WARNING_MESSAGE);
-                    
-        //             return;
-        //         }
-        //         String dataStr = null;
-        //         dataStr="User : " + emailFieldStr;
-        //         //
-        //         // create object and write data to file
-        //         //
-        //         fileIO fio = new fileIO("users.txt");
-        //         fio.wrTransactionData(dataStr);
-                
-        //         emailFieldStr.setText("");
-        
-        //         emailFieldStr.setSelectedItem("");
-        
-        //         status.setText("Success!");
-        //         status.setBackground(Color.GREEN);
-        //     }
-        // });
-        //btnNewButton.setBounds(250, 400, 133, 34);
-        btnNewButton.setBounds(250, 365, 200, 30);
-        contentPane.add(btnNewButton);
-        
+            
+            // Email text field
+            JTextField EmailTA = new JTextField("");
+            EmailTA.setBounds(250, 230, 200, 30);
+            contentPane.add(EmailTA);
+            EmailTA.setBorder(border);
+            EmailTA.setVisible(true);
+            EmailTA.setForeground(new Color(188, 188, 188));
+            EmailTA.setHorizontalAlignment(JTextField.CENTER);
         
             // Sign in text field
             JTextField header_SI = new JTextField("Sign in to Coinbase");
@@ -130,15 +99,6 @@ public class coinbase extends JFrame
             header_SI.setBorder(null);
             header_SI.setOpaque(false);
         
-            // Email text field
-            JTextField EmailTA = new JTextField("");
-            EmailTA.setBounds(250, 230, 200, 30);
-            contentPane.add(EmailTA);
-            EmailTA.setBorder(border);
-            EmailTA.setVisible(true);
-            EmailTA.setForeground(new Color(188, 188, 188));
-            EmailTA.setHorizontalAlignment(JTextField.CENTER);
-
             // Password text field
             JTextField passTA = new JTextField("");
             passTA.setBounds(250, 290, 200, 30);
@@ -159,20 +119,13 @@ public class coinbase extends JFrame
             contentPane.add(passL);
             passL.setFont(new Font("Tahoma", Font.PLAIN, 10));
                 
-            // Background box for log in
-            JTextArea background1 = new JTextArea();
-            background1.setBounds(200, 150, 300, 250);
-            background1.setEditable(false);
-            contentPane.add(background1);
-            background1.setBorder(border2);
+    
 
-
-
-            // Extra Information Under Sign in field
+            // Extra information text area
             JTextArea ExtraInfo1 = new JTextArea ("Join 68+ million people on Coinbase" + 
                                     "\n" + "Buy, sell, and manage your crypto on the world’s most trusted crypto exchange" +
                                     "\n" + "   * 68+ million customerse   " + "\n" + "   * 100+ supported countries   ");
-            ExtraInfo1.setBounds(230, 440, 300, 250);
+            ExtraInfo1.setBounds(180, 440, 390, 250);
             contentPane.add(ExtraInfo1);
             ExtraInfo1.setBackground(new Color(255, 255, 255));
             ExtraInfo1.setEditable(false);
@@ -183,10 +136,45 @@ public class coinbase extends JFrame
             ExtraInfo1.setOpaque(false);
             ExtraInfo1.setForeground(new Color(255, 255, 255));
 
-            //
-            // Sign up section
-            //
+            // Log in button
+            JButton btnNewButton = new JButton("Log in");
+            contentPane.add(btnNewButton);
+            btnNewButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent arg0)
+            {
+                String emailFieldStr = EmailTA.getText();
+                emailFieldStr        = emailFieldStr.trim();
+                if (emailFieldStr == "" || emailFieldStr == null || emailFieldStr.length() == 0)
+                {
+                    JOptionPane.showMessageDialog(null,
+                                    "Please enter a valid email address.");
+                    
+                    return;
+                }
+                String dataStr = null;
+                dataStr="User : " + emailFieldStr;
+     
+                fileIO fio = new fileIO("users.txt");
+                fio.wrTransactionData(dataStr);
+                
+                new BuyAndSell();
+            }
+        });
 
+        btnNewButton.setBounds(250, 365, 200, 30);
+        contentPane.add(btnNewButton);
+
+        // Background box for log in
+        JTextArea background1 = new JTextArea();
+        background1.setBounds(200, 150, 300, 250);
+        background1.setEditable(false);
+        contentPane.add(background1);
+        background1.setBorder(border2);
+        
+
+            
+            // Sign up section
+        
             // First name label
             JLabel FnameL = new JLabel("First name");
             FnameL.setBounds(650, 225, 90, 30);
@@ -271,24 +259,6 @@ public class coinbase extends JFrame
                 stateF.setBounds(650, 430, 200, 30);
                 contentPane.add(stateF);
 
-            // contentPane.add(state);
-
-            // btnNewButton_2.addActionListener(new ActionListener() {
-            //     @Override
-            //     public void actionPerformed(ActionEvent e) {
-            //         String selectedState = jComboBox.getSelectedIndex();
-            //         jLabel.setText(selectedState);
-            //     }
-            // });
-
-            // JTextField state = new JTextField("State");
-            // state.setBounds(650, 430, 200, 30);
-            // contentPane.add(state);
-            // state.setBorder(border);
-            // state.setForeground(new Color(188, 188, 188));
-            // state.setHorizontalAlignment(JTextField.CENTER);
-
-
             // State label
             JLabel stateL = new JLabel("State");
             stateL.setBounds(650, 405, 200, 30);
@@ -342,47 +312,6 @@ public class coinbase extends JFrame
             btnNewButton_3.setBounds(280, 700, 133, 34);
             contentPane.add(btnNewButton_3);
             
-            
-            
-            // SUBMIT Button
-            
-            // JButton submit = new JButton("SUBMIT");
-            // submit.setFont(new Font("Tahoma", Font.PLAIN, 16));
-            // submit.addActionListener(new ActionListener()
-            // {
-            //     public void actionPerformed(ActionEvent e)
-            //     {
-            //         if (numOfItems != 0)
-            //         {
-            //             String dataStr = null;
-                        
-            //             dataStr="Food Truck #1,A=" + numOfApples + ",G=" + numOfGrapes + ",O=" + numOfOranges + ",P=" + numOfPears + "," + numOfItems + "," + total;
-                        
-            //             fileIO fio = new fileIO();
-            //             fio.wrTransactionData(dataStr);
-                        
-            //             numOfItems = 0;
-                        
-            //             numOfApples  = 0;
-            //             numOfPears   = 0;
-            //             numOfOranges = 0;
-            //             numOfGrapes  = 0;
-                
-            //             textArea.setText("");
-            //             textField.setText("");
-            //         }
-            //         else
-            //         {
-            //             JOptionPane.showMessageDialog(null,
-            //                        "Sorry! Your shopping cart is empty now!",
-            //                        "Food Truck",
-            //                        JOptionPane.WARNING_MESSAGE);
-            //         }
-            //     }
-            // });
-            // submit.setBounds(250, 700, 133, 34);
-            // contentPane.add(submit);
-            
             // HELP Button
             JButton help = new JButton("HELP");
             help.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -405,47 +334,63 @@ public class coinbase extends JFrame
             // Position frame in the middle of the screen
             this.setLocationRelativeTo(null);
         }
-        
+
         // Thread to update TITLE BAR, date, and time
         private void refreshTitleBar()
         {
-           Thread refreshAllTitleBar = new Thread()
-           {
-              public void run()
-              {
-                 while (true)
-                 {
-                     try
-                     {
-                       // Display current time
-                       Date  date = new Date();
-                       String str = String.format("%tc", date);
+            Thread refreshAllTitleBar = new Thread()
+            {
+                public void run()
+                {
+                    while (true){
+                        try{
+                            // Display current time
+                            Date  date = new Date();
+                            String str = String.format("%tc", date);
                          
-                       String titleString = "Coinbase " + str;
+                            String titleString = "Coinbase " + str;
                        
-                       setTitle(titleString);
+                            setTitle(titleString);
                          
-                       sleep(5000L);  // Sleep for 5 seconds or 5,000 milliseconds
+                            sleep(5000L);  // Sleep for 5 seconds or 5,000 milliseconds
                        
-                     } // End try block
+                        } // End try block
                   
-                     catch (InterruptedException e)
-                     {
-                         JOptionPane.showMessageDialog(null,
-                                  "ERROR. Interrupt Exception! Check Internet Connection!",
-                                  "Title Top Bar",
-                                  JOptionPane.WARNING_MESSAGE);
-                         
-                         continue;
-                     }
-                     finally
-                     {
-                   
-                     }
-                 } // End while true
-             }
-          };
+                        catch (InterruptedException e){
+                            JOptionPane.showMessageDialog(null,
+                                    "ERROR. Interrupt Exception! Check Internet Connection!",
+                                    "Title Top Bar",
+                                    JOptionPane.WARNING_MESSAGE);
+                            
+                            continue;
+                        }
+                        finally{
+                    
+                        }
+                    }   // End while true
+                }
+            };
 
           refreshAllTitleBar.start();
+        }
+
+        public class BuyAndSell {
+            private JFrame f2 = new JFrame("Buy and Sell Cryptocurrencies ");
+            
+            public BuyAndSell() {
+            
+                f2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                f2.setSize(1000,1000);
+                f2.setVisible(true);
+
+                // Header
+                JTextArea header = new JTextArea();
+                header.setBounds(100, 200, 100, 200);
+                header.setEditable(false);
+                header.setBackground(new Color(134, 138, 135));
+                f2.add(header);
+                
+                
+            }
         }
 }
